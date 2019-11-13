@@ -1,2 +1,40 @@
 ---
-# tasks file for ansible-docker-base
+# Setup nginx base installation
+- name: Install nginx
+  become: True
+  apt:
+    name: nginx
+    state: present
+    update_cache: True
+    cache_valid_time: 86400
+
+- name: Create nginx config directories
+  become: True
+  file:
+    path: /etc/nginx/nginxconfig.io
+    state: directory
+
+- name: Template out nginx base config files
+  become: True
+  template:
+    src: templates/{{ item }}
+    dest: /etc/nginx/{{ item }}
+  loop:
+    - nginx.conf
+    - nginxconfig.io/general.conf
+    - nginxconfig.io/proxy.conf
+    - nginxconfig.io/security.conf
+
+- name: Create Diffie-Hellman keys
+  command: openssl dhparam -out /etc/nginx/dhparam.pem 2048
+  args:
+    creates: /etc/nginx/dhparam.pem
+
+# Configure reverse proxy sites
+## TODO: Find relevant sites and do some templating
+
+# Configure static site
+## TODO: Find relevant sites and do some templating
+
+# Configure backups
+## TODO

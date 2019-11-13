@@ -1,0 +1,40 @@
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    server_name {{ site_domain }};
+    root /var/www/{{ site_domain }}/public;
+
+    # SSL
+    ssl_certificate {{ cert_path }}/fullchain.pem;
+    ssl_certificate_key {{ cert_path }}/privkey.pem;
+    ssl_trusted_certificate {{ cert_path }}/chain.pem;
+
+    # security
+    include nginxconfig.io/security.conf;
+
+    # logging
+    access_log /var/log/nginx/dark.samn.co.uk.access.log;
+    error_log /var/log/nginx/dark.samn.co.uk.error.log warn;
+
+    # reverse proxy
+    location / {
+        proxy_pass {{ proxy_url }};
+        include nginxconfig.io/proxy.conf;
+    }
+
+    # additional config
+    include nginxconfig.io/general.conf;
+}
+
+# HTTP redirect
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name {{ site_domain }};
+
+    location / {
+        return 301 https://{{ site_domain }}$request_uri;
+    }
+}
