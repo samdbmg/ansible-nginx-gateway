@@ -1,7 +1,8 @@
-Role Name
+Docker Framework Base
 =========
 
-A brief description of the role goes here.
+Configures enough to expose various online services through docker-compose and
+an nginx gateway, plus configures regular backups of volume mounts.
 
 Requirements
 ------------
@@ -13,11 +14,23 @@ good idea to mention in this section that the boto package is required.
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.) should
-be mentioned here as well.
+The role is configured by a big block of data describing all the services you
+want to run. It's assumed you'll drop the Compose files into the right place and
+start them, this deals with some of the supporting odds and ends. Something like:
+
+```yaml
+services:
+  webserver:
+    type: static
+    data_directory:
+      - /var/www-data
+  irc:
+    type: reverse-proxy
+    port: 8081
+    client_cert: /etc/client-ca.crt
+    data_directory:
+      - /var/irc-data
+```
 
 Dependencies
 ------------
