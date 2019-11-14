@@ -1,2 +1,7 @@
 ---
 # handlers file for ansible-docker-base
+- name: Reload nginx
+  systemd:
+    service: nginx
+    state: reloaded
+    enabled: True

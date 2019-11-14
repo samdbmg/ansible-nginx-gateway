@@ -24,6 +24,7 @@
     - nginxconfig.io/general.conf
     - nginxconfig.io/proxy.conf
     - nginxconfig.io/security.conf
+  notify: Reload nginx
 
 - name: Create Diffie-Hellman keys
   command: openssl dhparam -out /etc/nginx/dhparam.pem 2048
@@ -42,6 +43,7 @@
   loop_control:
     label: "{{ item.name }}"
   when: item.type == "proxy"
+  notify: Reload nginx
 
 # Configure static site
 - name: Template out static sites
@@ -55,6 +57,7 @@
   loop_control:
     label: "{{ item.name }}"
   when: item.type == "static"
+  notify: Reload nginx
 
 # Configure backups
 ## TODO
