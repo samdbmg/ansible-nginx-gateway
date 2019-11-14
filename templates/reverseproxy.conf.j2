@@ -6,9 +6,11 @@ server {
     root /var/www/{{ site_domain }}/public;
 
     # SSL
-    ssl_certificate {{ cert_path }}/fullchain.pem;
-    ssl_certificate_key {{ cert_path }}/privkey.pem;
-    ssl_trusted_certificate {{ cert_path }}/chain.pem;
+    ssl_certificate {{ server_cert }};
+    ssl_certificate_key {{ server_cert_key }};
+{% if server_cert_chain is defined %}
+    ssl_trusted_certificate {{ server_cert_chain }}/chain.pem;
+{% endif %}
 
     # security
     include nginxconfig.io/security.conf;

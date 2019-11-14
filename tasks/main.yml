@@ -31,10 +31,30 @@
     creates: /etc/nginx/dhparam.pem
 
 # Configure reverse proxy sites
-## TODO: Find relevant sites and do some templating
+- name: Template out reverse proxy sites
+  template:
+    src: templates/reverseproxy.conf.j2
+    dest: /etc/nginx/sites-enabled/{{ item.domain }}.conf
+  vars:
+    site_domain: "{{ item.domain }}"
+    proxy_url: "{{ item.proxy_url }}"
+  loop: "{{ sites }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.type == "proxy"
 
 # Configure static site
-## TODO: Find relevant sites and do some templating
+- name: Template out static sites
+  template:
+    src: templates/staticsite.conf.j2
+    dest: /etc/nginx/sites-enabled/{{ item.domain }}.conf
+  vars:
+    site_domain: "{{ item.domain }}"
+    site_root: "{{ item.root }}"
+  loop: "{{ sites }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.type == "static"
 
 # Configure backups
 ## TODO

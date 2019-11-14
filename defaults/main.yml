@@ -1,2 +1,11 @@
 ---
 # defaults file for ansible-docker-base
+sites:
+  - name: demo
+    type: static
+    domain: demo.example.com
+    root: /var/www-data/something
+  - name: demoproxy
+    type: proxy
+    domain: proxy.example.com
+    proxy_url: https://example.com
