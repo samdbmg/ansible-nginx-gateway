@@ -16,8 +16,8 @@ server {
     include nginxconfig.io/security.conf;
 
     # logging
-    access_log /var/log/nginx/dark.samn.co.uk.access.log;
-    error_log /var/log/nginx/dark.samn.co.uk.error.log warn;
+    access_log /var/log/nginx/{{ site_domain }}.access.log;
+    error_log /var/log/nginx/{{ site_domain }}.error.log warn;
 
     # reverse proxy
     location / {

@@ -1,8 +1,29 @@
 ---
 - name: Converge
   hosts: all
+  become: True
   roles:
     - role: ansible-docker-base
       vars:
         server_cert: /etc/ssl/certs/ssl-cert-snakeoil.pem
-        server_cert_key: /etc/ssl/certs/ssl-cert-snakeoil.key
+        server_cert_key: /etc/ssl/private/ssl-cert-snakeoil.key
+        sites:
+          - name: demo
+            type: static
+            domain: demo.example.
+            root: /opt/demosite
+          - name: demoproxy
+            type: proxy
+            domain: proxy.example.
+            proxy_url: http://example.com
+
+  post_tasks:
+    - name: Check the static demo site is reachable
+      uri:
+        url: https://demo.example.
+        validate_certs: False
+
+    - name: Check the proxy demo site is reachable
+      uri:
+        url: https://proxy.example.
+        validate_certs: False
