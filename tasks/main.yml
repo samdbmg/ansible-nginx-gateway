@@ -1,21 +1,21 @@
 ---
 # Setup nginx base installation
 - name: Install nginx
-  become: True
+  become: true
   apt:
     name: nginx
     state: present
-    update_cache: True
+    update_cache: true
     cache_valid_time: 86400
 
 - name: Create nginx config directories
-  become: True
+  become: true
   file:
     path: /etc/nginx/nginxconfig.io
     state: directory
 
 - name: Template out nginx base config files
-  become: True
+  become: true
   template:
     src: templates/{{ item }}
     dest: /etc/nginx/{{ item }}

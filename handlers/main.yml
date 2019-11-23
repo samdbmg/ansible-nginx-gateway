@@ -4,4 +4,4 @@
   systemd:
     service: nginx
     state: reloaded
-    enabled: True
+    enabled: true
