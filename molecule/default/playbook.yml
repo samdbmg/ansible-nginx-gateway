@@ -3,7 +3,7 @@
   hosts: all
   become: true
   roles:
-    - role: ansible-docker-base
+    - role: ansible-docker-nginx
       vars:
         server_cert: /etc/ssl/certs/ssl-cert-snakeoil.pem
         server_cert_key: /etc/ssl/private/ssl-cert-snakeoil.key
