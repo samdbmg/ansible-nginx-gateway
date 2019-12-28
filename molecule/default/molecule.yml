@@ -2,14 +2,24 @@
 dependency:
   name: galaxy
 driver:
-  name: vagrant
-  provider:
-    name: virtualbox
+  name: docker
 lint:
   name: yamllint
 platforms:
   - name: instance
-    box: bento/ubuntu-18.04
+    image: leandelivery/docker-systemd:ubuntu-18.04
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    pre_build_image: true
+    etc_hosts:
+      "demo.example.": "127.0.0.1"
+      "proxy.example.": "127.0.0.1"
+    capabilities:
+      - SYS_ADMIN
+    privileged: true
 provisioner:
   name: ansible
   lint:
