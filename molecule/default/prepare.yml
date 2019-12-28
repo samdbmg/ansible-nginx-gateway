@@ -17,12 +17,17 @@
         state: present
         update_cache: true
         cache_valid_time: 86400
-    - name: Add sample sites to hosts file
-      lineinfile:
-        line: 127.0.0.1 demo.example. proxy.example.
-        path: /etc/hosts
-        state: present
     - name: Install snakeoil certs
       apt:
         name: ssl-cert
         state: present
+
+    - name: Create nginx config directory to enable fake key installation
+      file:
+        path: /etc/nginx/
+        state: directory
+
+    - name: Install "fake" Diffie-Hellman keys, because we know that bit works!
+      copy:
+        src: dhparam.pem
+        dest: /etc/nginx/dhparam.pem
