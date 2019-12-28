@@ -19,6 +19,6 @@ galaxy_info:
     - nginx
     - proxy
     - mtls
-    - client certificates
+    - certificates
 
 dependencies: []
