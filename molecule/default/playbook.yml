@@ -17,6 +17,18 @@
             domain: proxy.example.
             proxy_url: http://example.com
 
+          # Test both types with a client certificate
+          - name: cert-static
+            type: static
+            domain: static.cert.example.
+            root: /opt/demosite
+            client_ca_cert: /etc/ssl/certs/fake-client-ca.crt
+          - name: cert-proxy
+            type: proxy
+            domain: proxy.cert.example.
+            proxy_url: http://example.com
+            client_ca_cert: /etc/ssl/certs/fake-client-ca.crt
+
   post_tasks:
     - name: Check the static demo site is reachable
       uri:
@@ -27,3 +39,23 @@
       uri:
         url: https://proxy.example.
         validate_certs: false
+
+    - name: Check the certificate sites aren't reachable without a cert
+      uri:
+        url: "{{ item }}"
+        validate_certs: false
+      loop:
+        - https://static.cert.example.
+        - https://proxy.cert.example.
+      register: cert_sites_accessible
+      # Report failure if it works - this isn't supposed to be accessible!
+      failed_when: not cert_sites_accessible.failed
+
+    - name: Check the certificate sites with a cert
+      uri:
+        url: "{{ item }}"
+        validate_certs: false
+        client_cert: resources/generated-certs/fake-client-cert.pem
+      loop:
+        - https://static.cert.example.
+        - https://proxy.cert.example.
