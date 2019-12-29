@@ -29,5 +29,5 @@
 
     - name: Install "fake" Diffie-Hellman keys, because we know that bit works!
       copy:
-        src: dhparam.pem
+        src: resources/dhparam.pem
         dest: /etc/nginx/dhparam.pem
