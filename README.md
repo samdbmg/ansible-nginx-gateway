@@ -25,7 +25,7 @@ services:
   irc:
     type: reverse-proxy
     port: 8081
-    client_cert: /etc/client-ca.crt
+    client_ca_cert: /etc/client-ca.crt
     data_directory:
       - /var/irc-data
 ```

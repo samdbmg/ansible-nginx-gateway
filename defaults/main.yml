@@ -9,3 +9,8 @@ sites:
     type: proxy
     domain: proxy.example.com
     proxy_url: https://example.com
+  - name: democert
+    type: static
+    domain: cert.example.com
+    client_ca_cert: /etc/ssl/certs/my-custom-ca.crt
+    root: /var/www-data/my-secure-site
