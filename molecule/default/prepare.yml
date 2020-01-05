@@ -31,3 +31,15 @@
       copy:
         src: resources/dhparam.pem
         dest: /etc/nginx/dhparam.pem
+
+    - name: Generate a "fake" CA and client cert on the Ansible controller
+      become: false
+      delegate_to: 127.0.0.1
+      command: ./make-fake-cert.sh
+      args:
+        chdir: resources
+
+    - name: Copy the CA to the remote system
+      copy:
+        src: resources/generated-certs/fake-client-ca.crt
+        dest: /etc/ssl/certs/fake-client-ca.crt
