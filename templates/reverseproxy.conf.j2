@@ -12,6 +12,13 @@ server {
     ssl_trusted_certificate {{ server_cert_chain }}/chain.pem;
 {% endif %}
 
+{% if client_ca_cert %}
+    # Client cert verification
+    ssl_client_certificate {{ client_ca_cert }};
+    # Make verification optional, so we can display a 403 message to those who fail authentication
+    ssl_verify_client optional;
+{% endif %}
+
     # security
     include nginxconfig.io/security.conf;
 
@@ -23,6 +30,12 @@ server {
     location / {
         proxy_pass {{ proxy_url }};
         include nginxconfig.io/proxy.conf;
+
+{% if client_ca_cert %}
+        if ($ssl_client_verify != SUCCESS) {
+            return 403;
+        }
+{% endif %}
     }
 
     # additional config

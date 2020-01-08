@@ -15,6 +15,21 @@ server {
     # security
     include nginxconfig.io/security.conf;
 
+{% if client_ca_cert %}
+    # Client cert verification
+    ssl_client_certificate {{ client_ca_cert }};
+    # Make verification optional, so we can display a 403 message to those who fail authentication
+    ssl_verify_client optional;
+{% endif %}
+
+    location / {
+{% if client_ca_cert %}
+        if ($ssl_client_verify != SUCCESS) {
+            return 403;
+        }
+{% endif %}
+    }
+
     # logging
     access_log /var/log/nginx/{{ site_domain }}.access.log;
     error_log /var/log/nginx/{{ site_domain }}.error.log warn;
