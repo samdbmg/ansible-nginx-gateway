@@ -39,6 +39,7 @@
   vars:
     site_domain: "{{ item.domain }}"
     proxy_url: "{{ item.proxy_url }}"
+    client_ca_cert: "{{ item.client_ca_cert | default(None) }}"
   loop: "{{ sites }}"
   loop_control:
     label: "{{ item.name }}"
@@ -53,6 +54,7 @@
   vars:
     site_domain: "{{ item.domain }}"
     site_root: "{{ item.root }}"
+    client_ca_cert: "{{ item.client_ca_cert | default(None) }}"
   loop: "{{ sites }}"
   loop_control:
     label: "{{ item.name }}"
