@@ -11,16 +11,13 @@
       copy:
         content: <html><head></head><body><h1>Demo Site</h1></body></html>
         dest: /opt/demosite/index.html
-    - name: Install curl to view the site
-      apt:
-        name: curl
-        state: present
-        update_cache: true
-        cache_valid_time: 86400
+
     - name: Install snakeoil certs
       apt:
         name: ssl-cert
         state: present
+        update_cache: true
+        cache_valid_time: 86400
 
     - name: Create nginx config directory to enable fake key installation
       file:
