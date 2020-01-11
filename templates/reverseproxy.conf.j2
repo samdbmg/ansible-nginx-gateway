@@ -29,6 +29,11 @@ server {
     # reverse proxy
     location / {
         proxy_pass {{ proxy_url }};
+
+{% if not use_proxy_host %}
+        proxy_set_header Host $host;
+{% endif %}
+
         include nginxconfig.io/proxy.conf;
 
 {% if client_ca_cert %}

@@ -40,6 +40,7 @@
     site_domain: "{{ item.domain }}"
     proxy_url: "{{ item.proxy_url }}"
     client_ca_cert: "{{ item.client_ca_cert | default(None) }}"
+    use_proxy_host: "{{ item.use_proxy_host | default(False) }}"
   loop: "{{ sites }}"
   loop_control:
     label: "{{ item.name }}"
