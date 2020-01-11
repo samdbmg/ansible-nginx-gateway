@@ -8,9 +8,18 @@ sites:
   - name: demoproxy
     type: proxy
     domain: proxy.example.com
-    proxy_url: https://example.com
+    proxy_url: http://127.0.0.1:3000
   - name: democert
     type: static
     domain: cert.example.com
     client_ca_cert: /etc/ssl/certs/my-custom-ca.crt
     root: /var/www-data/my-secure-site
+
+    # Usually you'll proxy an internal site and this webserver will be it's canonical location, so the `Host` header
+    # should match the server name. However sometimes you'll want to transparently proxy to an external site, in which
+    # case you need `use_proxy_host: True`. Mostly this is useful for the unit tests!
+  - name: Proxying external site
+    type: proxy
+    domain: proxy-external-site.example.com
+    proxy_url: https://example.com
+    use_proxy_host: true

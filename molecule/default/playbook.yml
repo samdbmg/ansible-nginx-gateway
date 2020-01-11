@@ -16,6 +16,7 @@
             type: proxy
             domain: proxy.example
             proxy_url: http://example.com
+            use_proxy_host: true  # We need this because example.com is external
 
           # Test both types with a client certificate
           - name: cert-static
@@ -28,6 +29,7 @@
             domain: proxy.cert.example
             proxy_url: https://example.com
             client_ca_cert: /etc/ssl/certs/fake-client-ca.crt
+            use_proxy_host: true  # We need this because example.com is external
 
   post_tasks:
     - name: Check the static demo site is reachable
