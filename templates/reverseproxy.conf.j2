@@ -3,7 +3,6 @@ server {
     listen [::]:443 ssl http2;
 
     server_name {{ site_domain }};
-    root /var/www/{{ site_domain }}/public;
 
     # SSL
     ssl_certificate {{ server_cert }};
