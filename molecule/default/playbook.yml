@@ -53,11 +53,16 @@
       # Report failure if it works - this isn't supposed to be accessible!
       failed_when: not cert_sites_accessible.failed
 
+    - name: Copy the cert to the remote system
+      copy:
+        src: resources/generated-certs/fake-client-cert.pem
+        dest: /opt/fake-client-cert.pem
+
     - name: Check the certificate sites with a cert
       uri:
         url: "{{ item }}"
         validate_certs: false
-        client_cert: resources/generated-certs/fake-client-cert.pem
+        client_cert: /opt/fake-client-cert.pem
       loop:
         - https://static.cert.example
         - https://proxy.cert.example
