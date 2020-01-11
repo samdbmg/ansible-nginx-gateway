@@ -8,6 +8,12 @@
     update_cache: true
     cache_valid_time: 86400
 
+- name: Remove nginx default site
+  become: true
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
 - name: Create nginx config directories
   become: true
   file:
