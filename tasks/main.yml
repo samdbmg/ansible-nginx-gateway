@@ -56,6 +56,7 @@
     use_proxy_host: "{{ item.use_proxy_host | default(False) }}"
     use_by_default: "{{ item.use_by_default | default(False) }}"
     allow_insecure: "{{ item.allow_insecure | default(False) }}"
+    extra_config: "{{ item.extra_config | default(None) }}"
   loop: "{{ sites }}"
   loop_control:
     label: "{{ item.name }}"
@@ -74,6 +75,7 @@
     client_ca_cert: "{{ item.client_ca_cert | default(None) }}"
     use_by_default: "{{ item.use_by_default | default(False) }}"
     allow_insecure: "{{ item.allow_insecure | default(False) }}"
+    extra_config: "{{ item.extra_config | default(None) }}"
   loop: "{{ sites }}"
   loop_control:
     label: "{{ item.name }}"

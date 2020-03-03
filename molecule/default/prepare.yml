@@ -25,6 +25,12 @@
         dest: /opt/demosite/index.html
         mode: 0644
 
+    - name: Add a static site folder for indexing
+      file:
+        dest: /opt/demosite/directory
+        state: directory
+        mode: 0755
+
     - name: Generate an OpenSSL private key.
       openssl_privatekey:
         path: /etc/ssl/private/molecule-cert.key

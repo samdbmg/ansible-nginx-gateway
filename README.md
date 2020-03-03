@@ -27,6 +27,10 @@ sites:
     allow_insecure: false # Set this to allow the site to serve unencrypted (caution, security risk!). Default: False
     client_ca_cert: /etc/ssl/certs/my-custom-ca.crt # Location of a CA cert that client certificates should be validated
                                                     # against - specifying makes client cert mandatory. Default: empty
+    # Any extra config lines to insert into this site's location block, although make sure you don't cause accidental
+    # security risks (like this example!). Default: empty
+    extra_config: |
+      autoindex on;
 
   - name: sample-proxy-site # A name used in a few comments/filenames etc. (Required)
     type: proxy # `static` or `proxy` - whether the site is just on disk, or a reverse proxy (Required)
@@ -40,6 +44,10 @@ sites:
                            # so the `Host` header should match the server name. However sometimes you'll want to
                            # transparently proxy to an external site, in which case you need `use_proxy_host: True`.
                            # Mostly this is useful for the unit tests!. Default: False
+    # Any extra config lines to insert into this site's location block, although make sure you don't cause accidental
+    # security risks (like this example!). Default: empty
+    extra_config: |
+      autoindex on;
 ```
 
 Dependencies
