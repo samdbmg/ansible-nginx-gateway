@@ -23,7 +23,7 @@ jobs:
       - name: Lint code.
         run: |
           molecule syntax
-          yamllint .
+          molecule lint
 
   test:
     name: Test
