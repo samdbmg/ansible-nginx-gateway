@@ -8,8 +8,35 @@ name: CI with Molecule
     - cron: "0 7 * * 2"
 
 jobs:
-  test:
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Setup Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install lint dependencies.
+        run: pip3 install molecule[docker] yamllint ansible-lint
+      - name: Lint code.
+        run: |
+          molecule syntax
+          yamllint .
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - distro: ubuntu1804
+          - distro: ubuntu2004
+    env:
+      PY_COLORS: '1'
+      ANSIBLE_FORCE_COLOR: '1'
+      MOLECULE_DISTRO: ${{ matrix.distro }}
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -20,13 +47,13 @@ jobs:
       - name: Install deps
         run: pip3 install ansible ansible-lint molecule[docker]
 
-      - name: Check syntax
-        run: molecule syntax
       - name: Create instances, prepare environment
         run: molecule create && molecule prepare
       - name: Apply the role to the instance, run tests
         run: molecule converge
       - name: Check the role is idempotent
         run: molecule idempotence
+      - name: Run tests
+        run: molecule verify
       - name: Clean up instance
         run: molecule destroy
