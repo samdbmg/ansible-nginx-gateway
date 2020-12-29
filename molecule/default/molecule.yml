@@ -28,5 +28,7 @@ platforms:
       - "443"
 provisioner:
   name: ansible
+verifier:
+  name: ansible
 scenario:
   name: default

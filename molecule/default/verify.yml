@@ -1,0 +1,45 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  tasks:
+    - name: Check the static demo site is reachable
+      uri:
+        url: https://demo.example
+        validate_certs: false
+        return_content: true
+      register: static_site
+      failed_when: '"<h1>Demo Site</h1>" not in static_site.content'
+
+    - name: Check the proxy demo site is reachable
+      uri:
+        url: https://proxy.example
+        validate_certs: false
+        return_content: true
+      register: proxy_site
+      failed_when: '"<h1>Example Domain</h1>" not in proxy_site.content'
+
+    - name: Check the certificate sites aren't reachable without a cert
+      uri:
+        url: "{{ item }}"
+        validate_certs: false
+      loop:
+        - https://static.cert.example
+        - https://proxy.cert.example
+      register: cert_sites_accessible
+      # Report failure if it works - this isn't supposed to be accessible!
+      failed_when: not cert_sites_accessible.failed
+
+    - name: Copy the cert to the remote system
+      copy:
+        src: resources/generated-certs/fake-client-cert.pem
+        dest: /opt/fake-client-cert.pem
+
+    - name: Check the certificate sites with a cert
+      uri:
+        url: "{{ item }}"
+        validate_certs: false
+        client_cert: /opt/fake-client-cert.pem
+      loop:
+        - https://static.cert.example
+        - https://proxy.cert.example
