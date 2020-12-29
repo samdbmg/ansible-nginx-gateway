@@ -10,12 +10,14 @@ lint: |
   flake8
 platforms:
   - name: instance
-    image: leandelivery/docker-systemd:ubuntu-18.04
+    image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:latest
     tmpfs:
       - /run
       - /tmp
+      - /run/lock
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command: ${MOLECULE_DOCKER_COMMAND:-""}  # systemd won't work if this is left to molecule's default
     pre_build_image: true
     etc_hosts:
       "demo.example": "127.0.0.1"
@@ -24,9 +26,6 @@ platforms:
       "proxy.cert.example": "127.0.0.1"
     published_ports:
       - "443"
-    capabilities:
-      - SYS_ADMIN
-    privileged: true
 provisioner:
   name: ansible
 scenario:
