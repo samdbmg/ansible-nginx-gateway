@@ -19,12 +19,14 @@
   file:
     path: /etc/nginx/nginxconfig.io
     state: directory
+    mode: 0755
 
 - name: Template out nginx base config files
   become: true
   template:
     src: templates/{{ item }}
     dest: /etc/nginx/{{ item }}
+    mode: 0644
   loop:
     - nginx.conf
     - nginxconfig.io/general.conf
@@ -42,6 +44,7 @@
   template:
     src: templates/reverseproxy.conf.j2
     dest: /etc/nginx/sites-enabled/{{ item.domain }}.conf
+    mode: 0644
   vars:
     site_domain: "{{ item.domain }}"
     proxy_url: "{{ item.proxy_url }}"
@@ -58,6 +61,7 @@
   template:
     src: templates/staticsite.conf.j2
     dest: /etc/nginx/sites-enabled/{{ item.domain }}.conf
+    mode: 0644
   vars:
     site_domain: "{{ item.domain }}"
     site_root: "{{ item.root }}"
