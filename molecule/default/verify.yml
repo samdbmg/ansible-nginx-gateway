@@ -34,6 +34,7 @@
       copy:
         src: resources/generated-certs/fake-client-cert.pem
         dest: /opt/fake-client-cert.pem
+        mode: 0644
 
     - name: Check the certificate sites with a cert
       uri:

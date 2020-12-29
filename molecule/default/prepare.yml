@@ -7,10 +7,12 @@
       file:
         dest: /opt/demosite
         state: directory
+        mode: 0755
     - name: Drop out a rubbish static site
       copy:
         content: <html><head></head><body><h1>Demo Site</h1></body></html>
         dest: /opt/demosite/index.html
+        mode: 0644
 
     - name: Install snakeoil certs
       apt:
@@ -23,11 +25,13 @@
       file:
         path: /etc/nginx/
         state: directory
+        mode: 0755
 
     - name: Install "fake" Diffie-Hellman keys, because we know that bit works!
       copy:
         src: resources/dhparam.pem
         dest: /etc/nginx/dhparam.pem
+        mode: 0600
 
     - name: Generate a "fake" CA and client cert on the Ansible controller
       become: false
@@ -35,8 +39,10 @@
       command: ./make-fake-cert.sh
       args:
         chdir: resources
+        creates: generated_certs/fake-client-ca.crt
 
     - name: Copy the CA to the remote system
       copy:
         src: resources/generated-certs/fake-client-ca.crt
         dest: /etc/ssl/certs/fake-client-ca.crt
+        mode: 0600
