@@ -73,6 +73,3 @@
     label: "{{ item.name }}"
   when: item.type == "static"
   notify: Reload nginx
-
-# Configure backups
-## TODO
