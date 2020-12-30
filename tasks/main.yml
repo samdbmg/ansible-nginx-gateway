@@ -2,11 +2,9 @@
 # Setup nginx base installation
 - name: Install nginx
   become: true
-  apt:
+  package:
     name: nginx
     state: present
-    update_cache: true
-    cache_valid_time: 86400
 
 - name: Remove nginx default site
   become: true

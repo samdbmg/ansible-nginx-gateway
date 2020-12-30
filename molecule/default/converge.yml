@@ -6,8 +6,8 @@
     # Apply the role from the top-level directory name rather than hardcoding
     - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
       vars:
-        server_cert: /etc/ssl/certs/ssl-cert-snakeoil.pem
-        server_cert_key: /etc/ssl/private/ssl-cert-snakeoil.key
+        server_cert: /etc/ssl/certs/molecule-cert.pem
+        server_cert_key: /etc/ssl/private/molecule-cert.key
         sites:
           - name: demo
             type: static
