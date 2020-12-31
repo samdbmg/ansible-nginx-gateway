@@ -9,11 +9,16 @@
         cache_valid_time: 86400
       when: ansible_distribution == "Ubuntu"
 
-    - name: Create somewhere for static site to live
+    - name: Make various directories we'll need
       file:
-        dest: /opt/demosite
+        dest: "{{ item }}"
         state: directory
         mode: 0755
+      loop:
+        - /opt/demosite  # For demo site used for testing
+        - /etc/nginx  # For DH key install
+        - /etc/ssl/private  # Snakeoil cert key
+        - /etc/ssl/certs  # Snakeoil cert
 
     - name: Drop out a rubbish static site
       copy:
@@ -30,12 +35,6 @@
         path: /etc/ssl/certs/molecule-cert.pem
         privatekey_path: /etc/ssl/private/molecule-cert.key
         provider: selfsigned
-
-    - name: Create nginx config directory to enable fake key installation
-      file:
-        path: /etc/nginx/
-        state: directory
-        mode: 0755
 
     - name: Install "fake" Diffie-Hellman keys, because we know that bit works!
       copy:

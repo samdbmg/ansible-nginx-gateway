@@ -15,9 +15,12 @@
 - name: Create nginx config directories
   become: true
   file:
-    path: /etc/nginx/nginxconfig.io
+    path: "{{ item }}"
     state: directory
     mode: 0755
+  loop:
+    - /etc/nginx/nginxconfig.io
+    - /etc/nginx/sites-enabled
 
 - name: Template out nginx base config files
   become: true
