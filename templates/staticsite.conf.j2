@@ -1,6 +1,6 @@
 server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
+    listen 443 ssl http2 {% if use_by_default %}default_server{% endif %};
+    listen [::]:443 ssl http2 {% if use_by_default %}default_server{% endif %};
 
     server_name {{ site_domain }};
     root {{ site_root }};
@@ -40,8 +40,8 @@ server {
 
 # HTTP redirect
 server {
-    listen 80;
-    listen [::]:80;
+    listen 80 {% if use_by_default %}default_server{% endif %};
+    listen [::]:80 {% if use_by_default %}default_server{% endif %};
 
     server_name {{ site_domain }};
 
