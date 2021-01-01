@@ -9,6 +9,7 @@ sites:
     type: proxy
     domain: proxy.example.com
     proxy_url: http://127.0.0.1:3000
+    use_by_default: true  # Make this site the one returned when server is accessed by IP (optional!)
   - name: democert
     type: static
     domain: cert.example.com
