@@ -19,6 +19,14 @@
       register: proxy_site
       failed_when: '"<h1>Example Domain</h1>" not in proxy_site.content'
 
+    - name: Check the default site (by IP) behaviour works
+      uri:
+        url: https://127.0.0.1
+        validate_certs: false
+        return_content: true
+      register: proxy_site
+      failed_when: '"<h1>Example Domain</h1>" not in proxy_site.content'
+
     - name: Check the certificate sites aren't reachable without a cert
       uri:
         url: "{{ item }}"
