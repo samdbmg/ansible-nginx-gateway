@@ -5,8 +5,8 @@ server {
     server_name {{ site_domain }};
 
     # SSL
-    ssl_certificate {{ server_cert }};
-    ssl_certificate_key {{ server_cert_key }};
+    ssl_certificate         {{ server_cert }};
+    ssl_certificate_key     {{ server_cert_key }};
 {% if server_cert_chain is defined %}
     ssl_trusted_certificate {{ server_cert_chain }}/chain.pem;
 {% endif %}
@@ -15,7 +15,7 @@ server {
     # Client cert verification
     ssl_client_certificate {{ client_ca_cert }};
     # Make verification optional, so we can display a 403 message to those who fail authentication
-    ssl_verify_client optional;
+    ssl_verify_client      optional;
 {% endif %}
 
     # security
@@ -23,7 +23,7 @@ server {
 
     # logging
     access_log /var/log/nginx/{{ site_domain }}.access.log;
-    error_log /var/log/nginx/{{ site_domain }}.error.log warn;
+    error_log  /var/log/nginx/{{ site_domain }}.error.log warn;
 
     # reverse proxy
     location / {
