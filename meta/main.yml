@@ -1,6 +1,7 @@
 ---
 galaxy_info:
-  author: Sam M-G
+  author: Sam Mesterton-Gibbons <sam@samn.co.uk>
+  role_name: nginx_gateway
   description: Sets up NGINX to act as a gateway for static sites and reverse proxying
 
   license: Apache
