@@ -22,6 +22,8 @@ platforms:
     etc_hosts:
       "demo.example": "127.0.0.1"
       "proxy.example": "127.0.0.1"
+      "insecure.example": "127.0.0.1"
+      "insecure_proxy.example": "127.0.0.1"
       "static.cert.example": "127.0.0.1"
       "proxy.cert.example": "127.0.0.1"
     published_ports:
