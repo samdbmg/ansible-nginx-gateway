@@ -19,6 +19,17 @@
             proxy_url: http://example.com
             use_proxy_host: true  # We need this because example.com is external
             use_by_default: true
+          - name: insecure_static
+            type: static
+            domain: insecure.example
+            root: /opt/demosite
+            allow_insecure: true
+          - name: insecure_proxy
+            type: proxy
+            domain: insecure_proxy.example
+            proxy_url: http://example.com
+            use_proxy_host: true  # We need this because example.com is external
+            allow_insecure: true
 
           # Test both types with a client certificate
           - name: cert-static

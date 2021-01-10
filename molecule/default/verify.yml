@@ -27,6 +27,20 @@
       register: proxy_site
       failed_when: '"<h1>Example Domain</h1>" not in proxy_site.content'
 
+    - name: Check the insecure static demo site is reachable
+      uri:
+        url: http://insecure.example
+        return_content: true
+      register: static_site
+      failed_when: '"<h1>Demo Site</h1>" not in static_site.content'
+
+    - name: Check the insecure proxy demo site is reachable
+      uri:
+        url: http://insecure_proxy.example
+        return_content: true
+      register: proxy_site
+      failed_when: '"<h1>Example Domain</h1>" not in proxy_site.content'
+
     - name: Check the certificate sites aren't reachable without a cert
       uri:
         url: "{{ item }}"
