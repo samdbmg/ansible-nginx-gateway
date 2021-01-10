@@ -1,26 +1,4 @@
 ---
 # defaults file for ansible-docker-base
-sites:
-  - name: demo
-    type: static
-    domain: demo.example.com
-    root: /var/www-data/something
-  - name: demoproxy
-    type: proxy
-    domain: proxy.example.com
-    proxy_url: http://127.0.0.1:3000
-    use_by_default: true  # Make this site the one returned when server is accessed by IP (optional!)
-  - name: democert
-    type: static
-    domain: cert.example.com
-    client_ca_cert: /etc/ssl/certs/my-custom-ca.crt
-    root: /var/www-data/my-secure-site
-
-    # Usually you'll proxy an internal site and this webserver will be it's canonical location, so the `Host` header
-    # should match the server name. However sometimes you'll want to transparently proxy to an external site, in which
-    # case you need `use_proxy_host: True`. Mostly this is useful for the unit tests!
-  - name: Proxying external site
-    type: proxy
-    domain: proxy-external-site.example.com
-    proxy_url: https://example.com
-    use_proxy_host: true
+# See the README for how to set this
+sites: []
