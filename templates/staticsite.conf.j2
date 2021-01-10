@@ -1,4 +1,8 @@
 server {
+{% if allow_insecure %}
+    listen 80 {% if use_by_default %}default_server{% endif %};
+    listen [::]:80 {% if use_by_default %}default_server{% endif %};
+{% endif %}
     listen 443 ssl http2 {% if use_by_default %}default_server{% endif %};
     listen [::]:443 ssl http2 {% if use_by_default %}default_server{% endif %};
 
@@ -38,6 +42,7 @@ server {
     include nginxconfig.io/general.conf;
 }
 
+{% if not allow_insecure %}
 # HTTP redirect
 server {
     listen 80 {% if use_by_default %}default_server{% endif %};
@@ -49,3 +54,4 @@ server {
         return 301 https://{{ site_domain }}$request_uri;
     }
 }
+{% endif %}

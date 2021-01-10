@@ -23,7 +23,8 @@ sites:
     domain: demo.example.com # The domain the site should be served from - you'll have to sort DNS yourself (Required)
     root: /var/www-data/something # For a static site, this is the location that the site's files are served from
                                   # (Required for type: static)
-    use_by_default: false # Set this true for one site, to make it the one responded to by IP. Default: False
+    use_by_default: false # Set this true for one site, to make it the one responded to by IP, Default: False
+    allow_insecure: false # Set this to allow the site to serve unencrypted (caution, security risk!). Default: False
     client_ca_cert: /etc/ssl/certs/my-custom-ca.crt # Location of a CA cert that client certificates should be validated
                                                     # against - specifying makes client cert mandatory. Default: empty
 
@@ -31,7 +32,8 @@ sites:
     type: proxy # `static` or `proxy` - whether the site is just on disk, or a reverse proxy (Required)
     domain: demo.example.com # The domain the site should be served from - you'll have to sort DNS yourself (Required)
     proxy_url: http://127.0.0.1:3000 # URL to proxy requests to, either localhost or remote (Required for type `proxy`)
-    use_by_default: false # Set this true for one site, to make it the one responded to by IP. Default: False
+    use_by_default: false # Set this true for one site, to make it the one responded to by IP, Default: False
+    allow_insecure: false # Set this to allow the site to serve unencrypted (caution, security risk!). Default: False
     client_ca_cert: /etc/ssl/certs/my-custom-ca.crt # Location of a CA cert that client certificates should be validated
                                                     # against - specifying makes client cert mandatory. Default: empty
     use_proxy_host: false  # Usually you'll proxy an internal site and this webserver will be it's canonical location,
