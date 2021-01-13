@@ -9,5 +9,8 @@ server_cert_key: /etc/ssl/private/server.key
 enable_http01_challenge: false
 http01_challenge_path: /var/www/_letsencrypt
 
+# Any entra sitewide config to include
+extra_sitewide_config:
+
 # See the README for how to set this
 sites: []
