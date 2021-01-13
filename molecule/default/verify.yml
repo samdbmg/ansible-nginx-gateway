@@ -41,6 +41,11 @@
       register: proxy_site
       failed_when: '"<h1>Example Domain</h1>" not in proxy_site.content'
 
+    - name: Check the extra config turned indexing on
+      uri:
+        url: https://demo.example/directory
+        validate_certs: false
+
     - name: Check the certificate sites aren't reachable without a cert
       uri:
         url: "{{ item }}"

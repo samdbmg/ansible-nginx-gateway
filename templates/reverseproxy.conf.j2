@@ -46,6 +46,10 @@ server {
 
         include nginxconfig.io/proxy.conf;
 
+{% if extra_config %}
+        {{ extra_config }}
+{% endif %}
+
 {% if client_ca_cert %}
         if ($ssl_client_verify != SUCCESS) {
             return 403;
