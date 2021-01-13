@@ -5,5 +5,9 @@
 server_cert: /etc/ssl/certs/server-chain.cert
 server_cert_key: /etc/ssl/private/server.key
 
+# Should the .well-known/acme-challenge directory point somewhere?
+enable_http01_challenge: false
+http01_challenge_path: /var/www/_letsencrypt
+
 # See the README for how to set this
 sites: []
