@@ -29,6 +29,13 @@ server {
     access_log /var/log/nginx/{{ site_domain }}.access.log;
     error_log  /var/log/nginx/{{ site_domain }}.error.log warn;
 
+{% if allow_insecure and enable_http01_challenge %}
+    # ACME-challenge
+    location ^~ /.well-known/acme-challenge/ {
+        root {{ http01_challenge_path }};
+    }
+{% endif %}
+
     # reverse proxy
     location / {
         proxy_pass {{ proxy_url }};
@@ -57,6 +64,13 @@ server {
     listen [::]:80 {% if use_by_default %}default_server{% endif %};
 
     server_name {{ site_domain }};
+
+{% if enable_http01_challenge %}
+    # ACME-challenge
+    location ^~ /.well-known/acme-challenge/ {
+        root {{ http01_challenge_path }};
+    }
+{% endif %}
 
     location / {
         return 301 https://{{ site_domain }}$request_uri;

@@ -55,6 +55,8 @@ Example Playbook
   roles:
       - role: ansible-docker-base
         vars:
+          server_cert: /etc/ssl/certs/server-chain.cert
+          server_cert_key: /etc/ssl/private/server.key
           sites:
             webserver:
               type: static
