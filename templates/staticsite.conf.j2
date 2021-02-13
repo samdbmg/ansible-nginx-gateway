@@ -18,6 +18,10 @@ server {
 
     # security
     include nginxconfig.io/security.conf;
+{% if not disable_csp %}
+    # Note this appears here instead of security.conf because it has to be disabled in some cases, e.g. Grafana
+    add_header Content-Security-Policy   "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;
+{% endif %}
 
 {% if client_ca_cert %}
     # Client cert verification
