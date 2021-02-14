@@ -19,11 +19,12 @@ jobs:
         with:
           python-version: '3.x'
       - name: Install lint dependencies.
-        run: pip3 install molecule[docker] yamllint ansible-lint
+        run: pip3 install ansible ansible-lint yamllint
       - name: Lint code.
         run: |
-          molecule syntax
-          molecule lint
+            yamllint .
+            # Ignore role name when linting
+            ansible-lint -x 106
 
   test:
     name: Test
