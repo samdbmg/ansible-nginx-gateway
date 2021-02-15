@@ -7,7 +7,7 @@ lint: |
   set -e
   yamllint .
   # Ignore role name when linting
-  ansible-lint -x 106
+  ansible-lint -x 'role-name'
 platforms:
   - name: instance
     image: geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2004}-ansible:latest
