@@ -22,6 +22,10 @@ server {
     # Note this appears here instead of security.conf because it has to be disabled in some cases, e.g. Grafana
     add_header Content-Security-Policy   "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;
 {% endif %}
+{% if not allow_insecure %}
+    # Note this appears here instead of security.conf because it has to be turned off for HTTP sites
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+{% endif %}
 
 {% if client_ca_cert %}
     # Client cert verification
