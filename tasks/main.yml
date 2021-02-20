@@ -57,6 +57,7 @@
     use_by_default: "{{ item.use_by_default | default(False) }}"
     allow_insecure: "{{ item.allow_insecure | default(False) }}"
     disable_csp: "{{ item.disable_csp | default(False) }}"
+    disable_security_headers: "{{ item.disable_security_headers | default(False) }}"
     extra_config: "{{ item.extra_config | default(None) }}"
   loop: "{{ sites }}"
   loop_control:
@@ -77,6 +78,7 @@
     use_by_default: "{{ item.use_by_default | default(False) }}"
     allow_insecure: "{{ item.allow_insecure | default(False) }}"
     disable_csp: "{{ item.disable_csp | default(False) }}"
+    disable_security_headers: "{{ item.disable_security_headers | default(False) }}"
     extra_config: "{{ item.extra_config | default(None) }}"
   loop: "{{ sites }}"
   loop_control:

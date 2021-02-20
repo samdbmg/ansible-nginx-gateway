@@ -22,8 +22,10 @@ server {
     ssl_verify_client      optional;
 {% endif %}
 
+{% if not disable_security_headers %}
     # security
     include nginxconfig.io/security.conf;
+{% endif %}
 {% if not disable_csp %}
     # Note this appears here instead of security.conf because it has to be disabled in some cases, e.g. Grafana
     add_header Content-Security-Policy   "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;
