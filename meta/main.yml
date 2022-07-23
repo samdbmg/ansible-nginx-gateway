@@ -7,7 +7,7 @@ galaxy_info:
 
   license: Apache
 
-  min_ansible_version: 2.5
+  min_ansible_version: "2.5"
 
   #
   # platforms is a list of platforms, and each platform has a name and a list of versions.
@@ -19,8 +19,8 @@ galaxy_info:
         - focal
     - name: EL
       versions:
-        - 7
-        - 8
+        - "7"
+        - "8"
   galaxy_tags:
     - nginx
     - proxy

@@ -4,12 +4,12 @@
   become: true
   tasks:
     - name: Update apt cache (Ubuntu)
-      apt:
+      ansible.builtin.apt:
         update_cache: true
       when: ansible_distribution == "Ubuntu"
 
     - name: Make various directories we'll need
-      file:
+      ansible.builtin.file:
         dest: "{{ item }}"
         state: directory
         mode: 0755
@@ -20,13 +20,13 @@
         - /etc/ssl/certs  # Snakeoil cert
 
     - name: Drop out a rubbish static site
-      copy:
+      ansible.builtin.copy:
         content: <html><head></head><body><h1>Demo Site</h1></body></html>
         dest: /opt/demosite/index.html
         mode: 0644
 
     - name: Add a static site folder for indexing
-      file:
+      ansible.builtin.file:
         dest: /opt/demosite/directory
         state: directory
         mode: 0755
@@ -42,7 +42,7 @@
         provider: selfsigned
 
     - name: Install "fake" Diffie-Hellman keys, because we know that bit works!
-      copy:
+      ansible.builtin.copy:
         src: resources/dhparam.pem
         dest: /etc/nginx/dhparam.pem
         mode: 0600
@@ -50,13 +50,13 @@
     - name: Generate a "fake" CA and client cert on the Ansible controller
       become: false
       delegate_to: 127.0.0.1
-      command: ./make-fake-cert.sh
+      ansible.builtin.command: ./make-fake-cert.sh
       args:
         chdir: resources
         creates: generated_certs/fake-client-ca.crt
 
     - name: Copy the CA to the remote system
-      copy:
+      ansible.builtin.copy:
         src: resources/generated-certs/fake-client-ca.crt
         dest: /etc/ssl/certs/fake-client-ca.crt
         mode: 0600

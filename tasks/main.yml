@@ -1,23 +1,23 @@
 ---
 - name: Include OS-specific variables.
-  include_vars: "{{ ansible_os_family }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yml"
 
 # Setup nginx base installation
 - name: Install nginx
   become: true
-  package:
+  ansible.builtin.package:
     name: nginx
     state: present
 
 - name: Remove nginx default site
   become: true
-  file:
+  ansible.builtin.file:
     path: /etc/nginx/sites-enabled/default
     state: absent
 
 - name: Create nginx config directories
   become: true
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     mode: 0755
@@ -27,7 +27,7 @@
 
 - name: Template out nginx base config files
   become: true
-  template:
+  ansible.builtin.template:
     src: templates/{{ item }}
     dest: /etc/nginx/{{ item }}
     mode: 0644
@@ -39,13 +39,13 @@
   notify: Reload nginx
 
 - name: Create Diffie-Hellman keys
-  command: openssl dhparam -out /etc/nginx/dhparam.pem 2048
+  ansible.builtin.command: openssl dhparam -out /etc/nginx/dhparam.pem 2048
   args:
     creates: /etc/nginx/dhparam.pem
 
 # Configure reverse proxy sites
 - name: Template out reverse proxy sites
-  template:
+  ansible.builtin.template:
     src: templates/reverseproxy.conf.j2
     dest: /etc/nginx/sites-enabled/{{ item.domain }}.conf
     mode: 0644
@@ -67,7 +67,7 @@
 
 # Configure static site
 - name: Template out static sites
-  template:
+  ansible.builtin.template:
     src: templates/staticsite.conf.j2
     dest: /etc/nginx/sites-enabled/{{ item.domain }}.conf
     mode: 0644
